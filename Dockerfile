@@ -148,8 +148,8 @@ ADD ./logstash-logrotate /etc/logrotate.d/logstash
 ADD ./kibana-logrotate /etc/logrotate.d/kibana
 RUN chmod 777 /etc/logrotate.d/elasticsearch \
  && chmod 777 /etc/logrotate.d/logstash \
- && chmod 777 /etc/logrotate.d/kibana
- && chmod 777 /var/run
+ && chmod 777 /etc/logrotate.d/kibana \
+ && chmod 777 /var/run \
  && chmod 777 /var/log
 
 
