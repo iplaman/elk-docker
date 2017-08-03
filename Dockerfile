@@ -20,6 +20,7 @@ ENV REFRESHED_AT 2017-01-13
 
 ENV GOSU_VERSION 1.8
 
+USER root
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -x \
  && apt-get update -qq \
@@ -145,9 +146,11 @@ RUN chmod -R +r /etc/logstash
 ADD ./elasticsearch-logrotate /etc/logrotate.d/elasticsearch
 ADD ./logstash-logrotate /etc/logrotate.d/logstash
 ADD ./kibana-logrotate /etc/logrotate.d/kibana
-RUN chmod 644 /etc/logrotate.d/elasticsearch \
- && chmod 644 /etc/logrotate.d/logstash \
- && chmod 644 /etc/logrotate.d/kibana
+RUN chmod 777 /etc/logrotate.d/elasticsearch \
+ && chmod 777 /etc/logrotate.d/logstash \
+ && chmod 777 /etc/logrotate.d/kibana
+ && chmod 777 /var/run
+ && chmod 777 /var/log
 
 
 ### configure Kibana
@@ -166,3 +169,4 @@ EXPOSE 5601 9200 9300 5044
 VOLUME /var/lib/elasticsearch
 
 CMD [ "/usr/local/bin/start.sh" ]
+USER 1001
